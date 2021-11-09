@@ -1,0 +1,73 @@
+/*TOOLBAR*/
+/* Add a green background color to the toolbar */
+.toolbar {
+    background-color: limegreen;
+    overflow: hidden;
+}
+
+/* Style the links in the toolbar */
+.toolbar a {
+    float: left; /* links move from the left of the toolbar to the right. Some links have inline styling to change this*/
+    text-align: center;
+    color: #f2f2f2; /* changes the colour of text on non-active web pages only */
+    font-size: 20px;
+    font-weight: bold;
+    padding: 16px 16px; /* increases the height of the colour above and below the text */
+    text-decoration: none; /* removes the underline from the hyperlink */
+}
+
+/* Add a color to the current web page title */
+.toolbar a.current {
+    background-color: #04aa20;
+    color: white;
+}
+
+/* Change the colour of links when hovered over */
+.toolbar a:hover {
+    background-color: #00ba00;
+    color: black;
+}
+
+.toolbar button {
+    float: left; /* links move from the left of the toolbar to the right. Some links have inline styling to change this*/
+    text-align: center;
+    color: #f2f2f2; /* changes the colour of text on non-active web pages only */
+    font-size: 20px;
+    font-weight: bold;
+    padding: 16px 16px; /* increases the height of the colour above and below the text */
+    text-decoration: none; /* removes the underline from the hyperlink */
+}
+
+/* Add a color to the current web page title */
+.toolbar button.current {
+    background-color: #04aa20;
+    color: white;
+}
+
+/* Change the colour of links when hovered over */
+.toolbar button:hover {
+    background-color: #00ba00;
+    color: black;
+}
+
+
+/* HEADINGS */
+h6{
+    text-align: center;
+    font-size: 26px;
+    text-underline: black;
+}
+
+
+
+/* EMBEDDED VIDEO */
+#embeddedVideo{
+    text-align: center;
+}
+
+
+
+/* SM Overview Table */
+table, th, td {
+    border:1px solid black;
+}
