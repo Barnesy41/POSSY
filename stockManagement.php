@@ -82,9 +82,6 @@ function checkForLowStock($connection,$companyName){
               FROM $tableName WHERE CurrentStockValue < MinimumStockValue AND Ordered='off'";
     $result = mysqli_query($connection, $query);
 
-    //Will only return one item below stock level, should return all.
-    //Could be fixed by calling this function at the beginning, and redirecting back
-    //to this page after each completion.
     if(mysqli_num_rows($result) > 0) {
         $_SESSION['returnedRows'] = mysqli_fetch_assoc($result);
         $_SESSION['companyName'] = $companyName;
