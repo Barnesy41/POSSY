@@ -5,6 +5,9 @@ session_start();
 include "database_connect.php";
 $connection = openConnection();
 
+/* Check If Any Product Are Low On Stock */
+checkForLowStock($connection,$_SESSION['companyName']);
+
 echo"
 <head>
     <link rel='stylesheet' href='Styles.css' type='text/css'> <!-- link HomePage to style sheet -->
@@ -71,5 +74,25 @@ function addEntriesToTable($companyName, $connection){
                                  '">Edit Product</a></td></tr>';
     }
     return $ret;
+}
+
+function checkForLowStock($connection,$companyName){
+    $tableName = "stockmanagementtable_".$companyName;
+    $query = "SELECT ProductID,ProductName,MinimumStockValue,CurrentStockValue,Ordered,SupplierName,Phone 
+              FROM $tableName WHERE CurrentStockValue < MinimumStockValue AND Ordered='off'";
+    $result = mysqli_query($connection, $query);
+
+    //Will only return one item below stock level, should return all.
+    //Could be fixed by calling this function at the beginning, and redirecting back
+    //to this page after each completion.
+    if(mysqli_num_rows($result) > 0) {
+        $_SESSION['returnedRows'] = mysqli_fetch_assoc($result);
+        $_SESSION['companyName'] = $companyName;
+        $_SESSION['tableName'] = $tableName;
+
+        header('Location: lowStock.php');// redirect user
+        exit;
+
+    }
 }
 ?>

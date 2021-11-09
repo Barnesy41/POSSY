@@ -22,6 +22,6 @@ mysqli_query($connection,$query);
 
 
 
-//header('Location: stockManagement.php');// redirect user
-//exit;
+header('Location: stockManagement.php');// redirect user
+exit;
 ?>
