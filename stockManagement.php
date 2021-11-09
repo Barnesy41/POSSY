@@ -27,7 +27,7 @@ echo "<div class='Container_SM_Overview'>
             <th>Item Name</th>
             <th>Current Quentity</th>
             <th>Minimum Quantity</th>
-            <th><form action='EditProduct.php'><button type='submit'>+New Product</button></form></th>
+            <th><form action='newProduct.php'><button type='submit'>+New Product</button></form></th>
         </tr>
         ".addEntriesToTable(strtolower($_SESSION['companyName']),$connection).
 
@@ -53,7 +53,7 @@ function getNumRows($companyName, $DBconnection){
 
 function addEntriesToTable($companyName, $connection){
     $tableName = "stockmanagementtable_".$companyName;
-    $query = "SELECT ProductName,MinimumStockValue,CurrentStockValue,Ordered,SupplierName,Phone 
+    $query = "SELECT ProductID,ProductName,MinimumStockValue,CurrentStockValue,Ordered,SupplierName,Phone 
               FROM $tableName";
     $result = mysqli_query($connection, $query);
 
@@ -63,7 +63,12 @@ function addEntriesToTable($companyName, $connection){
         $row = mysqli_fetch_assoc($result);
         $ret = $ret.'<tr><td>'.$row["ProductName"].'</td>
                      <td> '.$row["CurrentStockValue"].'</td>
-                     <td>'.$row["MinimumStockValue"].'</td></tr>';
+                     <td>'.$row["MinimumStockValue"].'</td>
+                     <td><a href="EditProduct.php?ProductID='.$row['ProductID'].'&TableName='.$tableName.
+                                 '&ProductName='.$row["ProductName"].'&CurrentStockValue='.$row["CurrentStockValue"].
+                                 '&MinimumStockValue='.$row["MinimumStockValue"].'&Ordered='.$row["Ordered"].
+                                 '&SupplierName='.$row["SupplierName"].'&PhoneNumber='.$row["Phone"].
+                                 '">Edit Product</a></td></tr>';
     }
     return $ret;
 }

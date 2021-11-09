@@ -12,4 +12,7 @@ mysqli_query($connection, "INSERT INTO menus(MenuName,CompanyName)
                                            VALUES('$menuName','$companyName')");
 
 closeConnection($connection);
+
+header('Location: MyMenus.php');// redirect user
+exit;
 ?>

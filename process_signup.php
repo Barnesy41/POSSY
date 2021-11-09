@@ -42,8 +42,8 @@ if ($numResults == 0) {
 
         mysqli_query($connection,
             "CREATE TABLE `users`.`$tableName` ( `ProductID` INT NOT NULL AUTO_INCREMENT ,
-                    `ProductName` TEXT NOT NULL , `MinimumStockValue` INT NOT NULL , `CurrentStockValue` INT NOT NULL, `Ordered` INT NOT NULL ,
-                    `SupplierName` TEXT NULL DEFAULT NULL , `Phone` INT(11) NULL ,
+                    `ProductName` TEXT NOT NULL , `MinimumStockValue` INT NOT NULL , `CurrentStockValue` INT NOT NULL, 
+                    `Ordered` TEXT NOT NULL DEFAULT 'off' ,`SupplierName` TEXT NULL DEFAULT NULL , `Phone` INT(11) NULL,
                      PRIMARY KEY (`ProductID`)); ");
 
         $query = "INSERT INTO stockmanagementhub(TableName,CompanyName)
