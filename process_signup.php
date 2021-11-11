@@ -38,16 +38,31 @@ if ($numResults == 0) {
     $numResults = mysqli_num_rows($result);
 
     if($numResults == 1){
+        /* Calculate Table Name For This Company */
         $tableName = "stockmanagementTable_".$companyName;
 
+        /* Create A Stock Management Table For This Company */
         mysqli_query($connection,
             "CREATE TABLE `users`.`$tableName` ( `ProductID` INT NOT NULL AUTO_INCREMENT ,
                     `ProductName` TEXT NOT NULL , `MinimumStockValue` INT NOT NULL , `CurrentStockValue` INT NOT NULL, 
                     `Ordered` TEXT NOT NULL DEFAULT 'off' ,`SupplierName` TEXT NULL DEFAULT NULL , `Phone` INT(11) NULL,
                      PRIMARY KEY (`ProductID`)); ");
 
+        /* Insert the Table Name and Company Name into the Stock Management Hub table */
         $query = "INSERT INTO stockmanagementhub(TableName,CompanyName)
                   VALUES('$tableName', '$companyName')";
+        mysqli_query($connection,$query);
+
+        /* Create A Transaction History Table For This Company */
+        $query = "CREATE TABLE `users`.`transactionhistory_$companyName` ( 
+                  `TransactionID` INT(9) NOT NULL AUTO_INCREMENT , `Complete` TEXT NOT NULL DEFAULT 'no' , 
+                  PRIMARY KEY (`TransactionID`))";
+        mysqli_query($connection,$query);
+
+        /* Create Initial Transaction Table */
+        $query = "CREATE TABLE `users`.`transation_0_$companyName` ( `SaleItemID` INT(9) NOT NULL ,
+                `SaleItemName` TEXT NOT NULL , `Cost` DOUBLE NOT NULL , `Quantity` INT NOT NULL ,
+                 PRIMARY KEY (`SaleItemID`))";
         mysqli_query($connection,$query);
 
     }
