@@ -19,17 +19,23 @@
 
 <form action="process_existingMenu.php">
     <div class = "menuButtonContainer">
-        <input type="text" name="existingMenuName" placeholder="Enter pre-existing menu name">
-        <button type="submit">Confirm</button>
+
+        <label for="existingMenuName">Existing Menu Name:
+        <input type="text" name="existingMenuName" id="existingMenuName" placeholder="Enter pre-existing menu name" required></label>
+
+        <button type="submit" name="submit">Confirm</button>
     </div>
 </form>
+
 <form action="process_newMenu.php"> <!-- send entered data into process_myMenu.php for processing -->
     <div class = "newMenuButtonContainer">
 
-        <input type="text" name="MenuName" placeholder="Menu1" required>
-        <button type="submit">+New Menu</button>
-    </div>
+        <label for="MenuName">New Menu Name:
+        <input type="text" name="MenuName" placeholder="Menu1" required></label>
 
+        <button type="submit" name="submit">+New Menu</button>
+    </div>
+</form>
 
 
 </body>
