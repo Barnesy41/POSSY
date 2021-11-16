@@ -20,9 +20,9 @@ $menuID = $row['MenuID'];
 /* Create a table to contain the data for the new menu */
 $menuName = "menu_".$companyName."_".$menuID;
 
-$query = "CREATE TABLE `users`.`$menuName` ( `saleItemID` INT(9) NOT NULL AUTO_INCREMENT ,
+$query = "CREATE TABLE `users`.`$menuName` ( `ID` INT(9) NOT NULL AUTO_INCREMENT ,
           `saleItemName` TEXT NOT NULL , `price` DOUBLE NOT NULL , `category` TEXT NOT NULL ,
-           PRIMARY KEY (`saleItemID`))";
+           PRIMARY KEY (`ID`))";
 mysqli_query($connection, $query);
 
 closeConnection($connection);
