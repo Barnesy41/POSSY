@@ -6,8 +6,10 @@ $connect = openConnection();
 $menuName = $_GET["existingMenuName"];
 $companyName = $_SESSION['companyName'];
 
-$result = mysqli_query($connect,"SELECT MenuName FROM menus
-                                       WHERE CompanyName = '$companyName' AND menuName = '$menuName'");
+$_SESSION['menuName'] = $menuName;
+
+$query = "SELECT MenuName FROM menus WHERE CompanyName = '$companyName' AND menuName = '$menuName'";
+$result = mysqli_query($connect,$query);
 
 if (mysqli_num_rows($result) !=0){
 
