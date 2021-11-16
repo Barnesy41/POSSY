@@ -60,7 +60,7 @@ if ($numResults == 0) {
         mysqli_query($connection,$query);
 
         /* Create Initial Transaction Table */
-        $query = "CREATE TABLE `users`.`transation_1_$companyName` ( `SaleItemID` INT(9) NOT NULL ,
+        $query = "CREATE TABLE `users`.`transaction_1_$companyName` ( `SaleItemID` INT(9) NOT NULL ,
                 `SaleItemName` TEXT NOT NULL , `Cost` DOUBLE NOT NULL , `Quantity` INT NOT NULL ,
                  PRIMARY KEY (`SaleItemID`))";
         mysqli_query($connection,$query);
