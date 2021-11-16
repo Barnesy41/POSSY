@@ -81,6 +81,8 @@
             include "database_connect.php";
             $connection = openConnection();
 
+            //Open the current transaction
+            //And display the transaction number
             $query = "SELECT TransactionID FROM transactionhistory_$companyName WHERE Complete = 'no'";
 
             $result = mysqli_query($connection,$query);
@@ -90,6 +92,21 @@
 
             echo "<h2 align='center'> Transaction ID: ".$transactionID."</h2>";
 
+
+
+            //Display the current items on the transaction
+            $tableName = "transaction_".$transactionID."_".$companyName;
+            $query = "SELECT SaleItemName,Cost,Quantity FROM $tableName";
+            $result = mysqli_query($connection,$query);
+
+            for($i=0;$i<mysqli_num_rows($result);$i++){
+                $row = mysqli_fetch_assoc($result);
+                $saleItemName = $row['SaleItemName'];
+                $saleItemCost = "£".$row['Cost'];
+                $quantity = $row['Quantity'];
+
+                echo "<p align='center'>$saleItemName <br> Quantity: $quantity <br> $saleItemCost</p>";
+            }
         ?>
     </span>
 
