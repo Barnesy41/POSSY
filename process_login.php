@@ -17,17 +17,17 @@ $numResults = mysqli_num_rows($result);
 
 if($numResults != 0){
     /* Get the values of companyName, email, and phoneNumber. If details are note provided, false is placed into the variables */
-    $result = mysqli_query($connection,"SELECT Company FROM Credentials
-                                  WHERE Username = '$username'");
+    $query = "SELECT Company FROM Credentials WHERE Username = '$username'";
+    $result = mysqli_query($connection,$query);
     $row = $result->fetch_row();
     $companyName = $row[0] ?? false;
 
-    $result = mysqli_query($connection,"SELECT Email FROM Credentials
-                                  WHERE Username = '$username'");
+    $query = "SELECT Email FROM Credentials WHERE Username = '$username'";
+    $result = mysqli_query($connection,$query);
     $email = $result->fetch_row()[0] ?? false;
 
-    $result = mysqli_query($connection,"SELECT Phone FROM Credentials
-                                  WHERE Username = '$username'");
+    $query = "SELECT Phone FROM Credentials WHERE Username = '$username'";
+    $result = mysqli_query($connection,$query);
     $phoneNumber = $result->fetch_row()[0] ?? false;
 
     $_SESSION['username'] = $username;
