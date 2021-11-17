@@ -22,16 +22,16 @@ echo "Connected successfully"; */
     <link rel="stylesheet" href="Styles.css" type="text/css"> <!-- link Signup Page to style sheet -->
 </head>
 
+<!-- toolbar -->
+<div class="toolbar">
+    <a href="HomePage.php">Home</a>
+    <a href="MyMenus.php">MyMenus</a>
+    <a class="current" style="float: right;" href="Signup.php">Sign up</a>
+    <a style="float: right;" href="Login.php">Log-in</a>
+</div>
+
 <form action="process_signup.php"> <!-- send entered data into process_signup.php for processing -->
     <div class ="signup_container">
-
-        <!-- toolbar -->
-        <div class="toolbar">
-            <a href="HomePage.php">Home</a>
-            <a href="MyMenus.php">MyMenus</a>
-            <a class="current" style="float: right;" href="Signup.php">Sign up</a>
-            <a style="float: right;" href="Login.php">Log-in</a>
-        </div>
 
         <h1>Sign up</h1>
 
