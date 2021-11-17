@@ -11,8 +11,8 @@ $companyName = $_GET['companyName'];
 $phoneNumber = $_GET['phone'];
 
 /* Check if username already exists */
-$result = mysqli_query($connection, "SELECT Username FROM Credentials
-                                 WHERE Username = '$username'");
+$query = "SELECT Username FROM Credentials WHERE Username = '$username'";
+$result = mysqli_query($connection, $query);
 $numResults = mysqli_num_rows($result);
 
 /* submit details to Credentials table */
