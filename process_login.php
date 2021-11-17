@@ -11,8 +11,8 @@ $password = $_GET['password'];
 
 /* Run SQLi query to see if there is a match in the database to username and password
    If a match is found, a new object of type User is created */
-$result = mysqli_query($connection, "SELECT Username, Password FROM Credentials
-                                 WHERE Username = '$username' AND Password = '$password'");
+$query = "SELECT Username, Password FROM Credentials WHERE Username = '$username' AND Password = '$password'";
+$result = mysqli_query($connection, $query);
 $numResults = mysqli_num_rows($result);
 
 if($numResults != 0){
