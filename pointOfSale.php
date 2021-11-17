@@ -35,6 +35,15 @@
         margin: 10px;
     }
 
+    button.newSaleItem{
+        display: inline-grid;
+        width: 22%;
+        height: 15%;
+        border: 1px solid blue;
+        background-color: lime;
+        margin: 10px;
+    }
+
     span.midGUI{
         margin: auto;
         display: inline-block;
@@ -45,7 +54,7 @@
         padding-left 10px;
         border: 1px solid blue;
         background-color: yellow;
-        font-size: 18px; /* Cbange to zero, testing with above 0 */
+        font-size: 18px; /* Change to zero, testing with above 0 */
     }
 
     span.rightGUI{
@@ -121,6 +130,7 @@
         $menuID = $row['MenuID'];
 
         $tableName = "menu_".$companyName."_".$menuID;
+        $_SESSION['companyMenuTableName'] = $tableName;
 
         $query = "SELECT saleItemName,ID,price FROM $tableName";
         $result = mysqli_query($connection, $query);
@@ -142,6 +152,9 @@
                     
                   </form>";
         }
+
+        echo "<form action='editSaleItem.php'>
+              <button class= 'newSaleItem' type='submit'>+New <br> Sale Item</button></form>";
         ?>
     </span>
 
