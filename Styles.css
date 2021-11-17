@@ -1,5 +1,5 @@
 /*TOOLBAR*/
-/* Add a green background color to the toolbar */
+/* Add green background to the toolbar */
 .toolbar {
     background-color: limegreen;
     overflow: hidden;
@@ -7,13 +7,13 @@
 
 /* Style the links in the toolbar */
 .toolbar a {
-    float: left; /* links move from the left of the toolbar to the right. Some links have inline styling to change this*/
+    float: left; /* links move from the left to right. Some links have inline styling to change this*/
+    text-decoration: none; /* removes the underline from the hyperlink */
     text-align: center;
-    color: #f2f2f2; /* changes the colour of text on non-active web pages only */
+    color: #f2f2f2; /* change the colour of text on inactive web pages */
     font-size: 20px;
     font-weight: bold;
-    padding: 16px 16px; /* increases the height of the colour above and below the text */
-    text-decoration: none; /* removes the underline from the hyperlink */
+    padding: 16px 16px; /* increase the height of the colour above and below the text */
 }
 
 /* Add a color to the current web page title */
@@ -29,13 +29,13 @@
 }
 
 .toolbar button {
-    float: left; /* links move from the left of the toolbar to the right. Some links have inline styling to change this*/
+    float: left; /* links move from the left to the right. Some links have inline styling to change this */
+    text-decoration: none; /* removes the underline from the hyperlink */
     text-align: center;
-    color: #f2f2f2; /* changes the colour of text on non-active web pages only */
+    color: #f2f2f2; /* changes the colour of text on inactive web pages */
     font-size: 20px;
     font-weight: bold;
     padding: 16px 16px; /* increases the height of the colour above and below the text */
-    text-decoration: none; /* removes the underline from the hyperlink */
 }
 
 /* Add a color to the current web page title */
