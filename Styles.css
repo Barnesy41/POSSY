@@ -1,4 +1,9 @@
 /*TOOLBAR*/
+/* Remove margins from <body> tag */
+body{
+    margin: 0px;
+}
+
 /* Add green background to the toolbar */
 .toolbar {
     background-color: limegreen;
@@ -19,37 +24,14 @@
 /* Add a color to the current web page title */
 .toolbar a.current {
     background-color: #04aa20;
-    color: white;
+    color: #0000005A;
 }
 
 /* Change the colour of links when hovered over */
 .toolbar a:hover {
     background-color: #00ba00;
-    color: black;
+    color: #0000005A;
 }
-
-.toolbar button {
-    float: left; /* links move from the left to the right. Some links have inline styling to change this */
-    text-decoration: none; /* removes the underline from the hyperlink */
-    text-align: center;
-    color: #f2f2f2; /* changes the colour of text on inactive web pages */
-    font-size: 20px;
-    font-weight: bold;
-    padding: 16px 16px; /* increases the height of the colour above and below the text */
-}
-
-/* Add a color to the current web page title */
-.toolbar button.current {
-    background-color: #04aa20;
-    color: white;
-}
-
-/* Change the colour of links when hovered over */
-.toolbar button:hover {
-    background-color: #00ba00;
-    color: black;
-}
-
 
 /* HEADINGS */
 h6{
