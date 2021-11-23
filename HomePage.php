@@ -19,7 +19,7 @@
 <!-- embed a youtube video into the centre of the HomePage -->
 <div id="embeddedVideo">
     <iframe width="60%" height="500" style="border: none;" allowfullscreen
-            src="https://www.youtube.com/embed/j5a0jTc9S10?rel=0&amp;controls=0&amp;showinfo=0&amp;autoplay=1">
+            src="https://www.youtube.com/embed/j5a0jTc9S10?rel=0&amp;controls=0&amp;showinfo=0">
     </iframe>
 </div>
 
