@@ -116,6 +116,19 @@
 
                 echo "<p align='center'>$saleItemName <br> Quantity: $quantity <br> $saleItemCost</p>";
             }
+
+            /* Output total cost of transaction */
+            $query = "SELECT Quantity, Cost FROM $tableName";
+            $result = mysqli_query($connection, $query);
+
+            $total = 0;
+            for($i=0;$i<mysqli_num_rows($result);$i++){
+                $row = mysqli_fetch_assoc($result);
+                $total += $row['Cost'] * $row['Quantity'];
+
+            }
+            echo "<h3 align='center'>Total: $total</h3>";
+
         ?>
     </span>
 
