@@ -51,7 +51,7 @@ echo "Connected successfully"; */
         <br>
 
         <label for="email">Email</label>
-        <input type="text" name="email" placeholder="Enter Your Email Address Here">
+        <input type="email" name="email" placeholder="Enter Your Email Address Here">
 
         <br>
 
