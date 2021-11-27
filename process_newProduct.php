@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 (string)$companyName = $_SESSION['companyName'];
 $_SESSION['TableName'] = "stockmanagementtable_".$companyName;
 $tableName = $_SESSION['TableName'];
@@ -13,11 +14,51 @@ $tableName = $_SESSION['TableName'];
 include "database_connect.php";
 $connection = openConnection();
 
-$query = "INSERT INTO $tableName(ProductName,MinimumStockValue,CurrentStockValue,Ordered,SupplierName,Phone)
+/* See if product name already exists */
+/* Run SQL query searching for all products and compare product names to entered product name */
+function isProductInTable($connection,$tableName,$productName){
+    $query = "SELECT ProductName FROM $tableName";
+    $result = mysqli_query($connection, $query);
+
+    for ($i = 0; $i < mysqli_num_rows($result); $i++) {
+        $row = mysqli_fetch_assoc($result);
+        if ($row['ProductName'] == $productName) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/* Checks if a value is greater than  or equal to zero. */
+/* Returns true if value is greater than or equal to zero */
+/* Returns false if value is less then 0 */
+function isGreaterThanOrEqualToZero($value){
+    if($value >= 0){
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+/* If the product is not in the table, insert the product into the stock management database */
+if (isProductInTable($connection, $tableName, $productName) == false) {
+
+    if(isGreaterThanOrEqualToZero($minimumStockValue) AND isGreaterThanOrEqualToZero($currentStockValue)) {
+        $query = "INSERT INTO $tableName(ProductName,MinimumStockValue,CurrentStockValue,Ordered,SupplierName,Phone)
           VALUES('$productName', '$minimumStockValue', '$currentStockValue', '$ordered',
           '$supplierName', '$phoneNumber')";
-mysqli_query($connection,$query);
+        mysqli_query($connection, $query);
+        echo "Product Successfully Added";
+    }
+    else{
+        echo "Value Smaller Than Zero Entered, INVALID!";
+    }
+}
+else{
+    echo "Product already exists!";
+}
 
-//header('Location: stockManagement.php');// redirect user
-//exit;
+header('Refresh: 2; URL=StockManagement.php');
+
 ?>
