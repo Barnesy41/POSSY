@@ -35,6 +35,8 @@ if($numResults != 0){
     $_SESSION['companyName'] = $companyName;
     $_SESSION['email'] = $email;
     $_SESSION['phoneNumber'] = $phoneNumber;
+
+    echo "Account accessed";
 }
 else{
     echo "this is not your account!";// temp
@@ -42,8 +44,8 @@ else{
 
 closeConnection($connection);
 
+header('Refresh: 3; URL=HomePage.php');
 
-header('Location: HomePage.php');// redirect to home page
 exit;
 
 ?>

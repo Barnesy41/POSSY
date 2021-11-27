@@ -3,6 +3,61 @@
 include "database_connect.php";
 $connection = openConnection();
 
+/* VALIDATE EMAIL */
+/* If valid returns true */
+/* If invalid returns false */
+function validateEmail($email){
+    $valid = false;
+
+    /* search through every character in an email until @ is found */
+    $count = 0;
+    while ($count < strlen($email) AND $email[$count] != "@"){
+        $count += 1;
+    }
+    if($email[$count] == "@") {
+        $secondHalfOfEmail = substr($email, $count + 1, strlen($email) - $count);
+
+        /* Search for dot (.) in second half of email */
+        $count = 0;
+
+        while ($count < strlen($secondHalfOfEmail) AND $secondHalfOfEmail[$count] != "."){
+            $count += 1;
+        }
+
+        /* Check that count is not greater than the last index of the array of the string $secondHalfOfEmail */
+        if($count != strlen($secondHalfOfEmail)) {
+
+            if ($secondHalfOfEmail[$count] == ".") {
+                $emailAfterDot = substr($secondHalfOfEmail, $count + 1, strlen($secondHalfOfEmail) - $count);
+
+                /* Search for alphabetic character at the end of the email */
+                $alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+
+                $i = 0;
+                while ($i < 26 and $valid == false) {
+
+                    $alphabeticCharacter = $alphabetArray[$i];
+
+                    /* Search for lowercase version */
+                    if ($emailAfterDot[strlen($emailAfterDot) - 1] == $alphabeticCharacter) {
+                        $valid = true;
+                    }
+                    /* Search for uppercase version */
+                    if ($emailAfterDot[strlen($emailAfterDot) - 1] == strtoupper($alphabeticCharacter)) {
+                        $valid = true;
+                    }
+
+                    $i += 1;
+
+                }
+            }
+        }
+    }
+
+
+    return $valid;
+}
+
 /* retrieve entered details from form */
 $username = $_GET['username'];
 $password = $_GET['password'];
@@ -15,8 +70,8 @@ $query = "SELECT Username FROM Credentials WHERE Username = '$username'";
 $result = mysqli_query($connection, $query);
 $numResults = mysqli_num_rows($result);
 
-/* submit details to Credentials table */
-if ($numResults == 0) {
+/* submit details to Credentials table if username is not in use and email is valid*/
+if ($numResults == 0 && validateEmail($email) == true) {
     echo "Username is valid\n";// temp
 
     if ($phoneNumber == null and $email != null) {
@@ -74,7 +129,13 @@ if ($numResults == 0) {
     echo "Username Created";// temp
 }
 else{
-    echo "Username already in use\n";// temp
+    /* Output error messages */
+    if($numResults != 0 ) {
+        echo "Username already in use\n";// temp
+    }
+    else{
+        echo "Email is invalid\n";// temp
+    }
 }
 
 // header('Location: HomePage.php');// redirect to home page
