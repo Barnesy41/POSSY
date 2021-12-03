@@ -22,10 +22,9 @@ echo "<option value='+new'>New Sale Item</option>";
 echo "</select>";
 
 echo "<input type='text' name='saleItemName' placeholder='Banana'>";
-echo "<input type='number' name='saleItemPrice' placeholder='0.00'>";
+echo "<input type='number' name='saleItemPrice' placeholder='0.00' step='0.01' min='0.00'>";
 echo "<input type='text' name='saleItemCategory' placeholder='Food'>";
-echo "<textarea type='text' name='products' placeholder='bread,bread,cheese'></textarea>";
+echo "<textarea name='products' placeholder='bread,bread,cheese'></textarea>";
 echo "<button type='submit'>Confirm</button>";
-echo "<textarea type='text' name='products' placeholder='bread,bread,cheese'></textarea>";
 
 ?>
