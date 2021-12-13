@@ -41,18 +41,52 @@ function isGreaterThanOrEqualToZero($value){
     }
 }
 
+/* Removes whitespace before first character,
+   and after the last character of a string. */
+/* Returns the resulting string */
+function removeWhitespaceBeforeAndAfterString($string){
+
+    while($string[0] == " "){
+        $string = substr($string, 1);
+    }
+    while ($string[strlen($string)-1] == " "){
+        $string = substr($string,0, strlen($string) - 1);
+    }
+
+    return $string;
+}
+
+
+function doesContainComma($string){
+
+    $commaFound = false;
+    for($i=0; $i<strlen($string); $i++){
+        if($string[$i] == ","){
+            $commaFound = true;
+        }
+    }
+
+    return $commaFound;
+}
+
 /* If the product is not in the table, insert the product into the stock management database */
 if (isProductInTable($connection, $tableName, $productName) == false) {
 
-    if(isGreaterThanOrEqualToZero($minimumStockValue) AND isGreaterThanOrEqualToZero($currentStockValue)) {
-        $query = "INSERT INTO $tableName(ProductName,MinimumStockValue,CurrentStockValue,Ordered,SupplierName,Phone)
+    if(doesContainComma($productName) == false) {
+        $productName = removeWhiteSpaceBeforeAndAfterString($productName);
+
+        if (isGreaterThanOrEqualToZero($minimumStockValue) and isGreaterThanOrEqualToZero($currentStockValue)) {
+            $query = "INSERT INTO $tableName(ProductName,MinimumStockValue,CurrentStockValue,Ordered,SupplierName,Phone)
           VALUES('$productName', '$minimumStockValue', '$currentStockValue', '$ordered',
           '$supplierName', '$phoneNumber')";
-        mysqli_query($connection, $query);
-        echo "Product Successfully Added";
+            mysqli_query($connection, $query);
+            echo "Product Successfully Added";
+        } else {
+            echo "Value Smaller Than Zero Entered, INVALID!";
+        }
     }
     else{
-        echo "Value Smaller Than Zero Entered, INVALID!";
+        echo "Invalid character: Comma ',' in product name";
     }
 }
 else{
