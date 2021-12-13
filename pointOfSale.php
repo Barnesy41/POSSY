@@ -129,6 +129,11 @@
             }
             echo "<h3 align='center'>Total: $total</h3>";
 
+            /*Complete Transaction Button */
+            echo "<form action='process_completeTransaction.php'>
+                  <button type='submit'>Complete</button>
+                  </form>";
+
         ?>
     </span>
 
