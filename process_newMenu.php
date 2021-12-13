@@ -21,7 +21,7 @@ $menuID = $row['MenuID'];
 $menuName = "menu_".$companyName."_".$menuID;
 
 $query = "CREATE TABLE `users`.`$menuName` ( `ID` INT(9) NOT NULL AUTO_INCREMENT ,
-          `saleItemName` TEXT NOT NULL , `price` DOUBLE NOT NULL , `category` TEXT NOT NULL ,
+          `saleItemName` TEXT NOT NULL , `price` DECIMAL(10,2) NOT NULL , `category` TEXT NOT NULL ,
            PRIMARY KEY (`ID`))";
 mysqli_query($connection, $query);
 
