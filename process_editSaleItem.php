@@ -115,13 +115,15 @@ if($saleItemToEdit == '+new' AND isTwoDecimalPlaces($itemPrice) == true){
 
         /* Insert product into SaleItem_Contents table if product does not already exist in the table */
         if($numResults == 0) {
-            $query = "INSERT INTO $tablename(Product,Quantity) VALUES($productArray[$i], 1)";
+            $query = "INSERT INTO $tablename(Product,Quantity) VALUES('$productArray[$i]', '1')";
             mysqli_query($connection,$query);
+
         }
         /* Otherwise, update the quantity of such item */
         else{
             $query = "UPDATE $tablename SET(Quantity = 'Quantity + 1') WHERE Product = $productArray[$i]";
             mysqli_query($connection,$result);
+
         }
     }
 
