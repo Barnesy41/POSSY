@@ -17,7 +17,7 @@ $result = mysqli_query($connection,$query);
 
 
 If (mysqli_num_rows($result) == 0){
-    $query = "INSERT INTO "."$tableName"."(SaleItemName,Cost,Quantity) VALUES('$saleItemName','$cost','1')";
+    $query = "INSERT INTO $tableName(SaleItemName,Cost,Quantity) VALUES('$saleItemName','$cost','1')";
     mysqli_query($connection,$query);
 
 }
