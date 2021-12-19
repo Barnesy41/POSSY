@@ -115,7 +115,7 @@ if ($numResults == 0 && validateEmail($email) == true) {
         mysqli_query($connection,$query);
 
         /* Create Initial Transaction Table */
-        $query = "CREATE TABLE `users`.`transaction_1_$companyName` ( `SaleItemID` INT(9) NOT NULL ,
+        $query = "CREATE TABLE `users`.`transaction_1_$companyName` ( `SaleItemID` INT(9) NOT NULL AUTO_INCREMENT ,
                 `SaleItemName` TEXT NOT NULL , `Cost` DOUBLE NOT NULL , `Quantity` INT NOT NULL ,
                  PRIMARY KEY (`SaleItemID`))";
         mysqli_query($connection,$query);
