@@ -108,33 +108,42 @@
             $query = "SELECT SaleItemName,Cost,Quantity FROM $tableName";
             $result = mysqli_query($connection,$query);
 
-            for($i=0;$i<mysqli_num_rows($result);$i++){
-                $row = mysqli_fetch_assoc($result);
-                $saleItemName = $row['SaleItemName'];
-                $saleItemCost = "£".$row['Cost'];
-                $quantity = $row['Quantity'];
+            $total = 0; // Stores the total for the current transaction
 
-                echo "<p align='center'>$saleItemName <br> Quantity: $quantity <br> $saleItemCost</p>";
+            /* Only runs if the SQL query produces results */
+            if($result != false) {
+
+                /* Loops through each row of the results from the SQL table */
+                for ($i = 0; $i < mysqli_num_rows($result); $i++) {
+                    $row = mysqli_fetch_assoc($result);
+                    $saleItemName = $row['SaleItemName'];
+                    $saleItemCost = "£" . $row['Cost'];
+                    $quantity = $row['Quantity'];
+
+                    echo "<p align='center'>$saleItemName <br> Quantity: $quantity <br> $saleItemCost</p>";
+                }
+
+                /* Calculate total cost of transaction */
+                $query = "SELECT Quantity, Cost FROM $tableName";
+                $result = mysqli_query($connection, $query);
+
+                for ($i = 0; $i < mysqli_num_rows($result); $i++) {
+                    $row = mysqli_fetch_assoc($result);
+                    $total += $row['Cost'] * $row['Quantity'];
+
+                }
             }
-
             /* Output total cost of transaction */
-            $query = "SELECT Quantity, Cost FROM $tableName";
-            $result = mysqli_query($connection, $query);
-
-            $total = 0;
-            for($i=0;$i<mysqli_num_rows($result);$i++){
-                $row = mysqli_fetch_assoc($result);
-                $total += $row['Cost'] * $row['Quantity'];
-
-            }
             echo "<h3 align='center'>Total: $total</h3>";
 
             /*Complete Transaction Button */
+            $_SESSION['transactionID'] = $transactionID;
             echo "<form action='process_completeTransaction.php'>
                   <button type='submit'>Complete</button>
+                  <input type='hidden' name='transactionID' value='$transactionID'>
                   </form>";
 
-        ?>
+            ?>
     </span>
 
     <span class = 'midGUI' >
@@ -155,6 +164,7 @@
         $numRows = mysqli_num_rows($result);
 
         for($i=0;$i<$numRows; $i++){
+
             $row = mysqli_fetch_assoc($result);
             $saleItemName = $row['saleItemName'];
             $saleItemID = $row['ID'];
