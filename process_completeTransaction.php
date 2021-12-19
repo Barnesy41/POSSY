@@ -180,3 +180,6 @@ function updateStockManagementSystem($DBconnection,$companyName)
  * MAIN
 */
 updateStockManagementSystem($connection,$companyName);
+
+header('Location: pointOfSale.php');// redirect to home page
+exit;

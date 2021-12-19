@@ -15,13 +15,24 @@ $tableName = "transaction_".$transactionID."_".$companyName;
 $query = "SELECT Quantity FROM $tableName WHERE SaleItemName = '$saleItemName'";
 $result = mysqli_query($connection,$query);
 
+echo $query;
+// This fixed an unusual bug with mysqli_query sometimes returning 0 rows but not being false
+$numRows = 0;
+if($result != false){
+    $numRows = mysqli_num_rows($result);
+}
 
-If (mysqli_num_rows($result) == 0){
-    $query = "INSERT INTO $tableName(SaleItemName,Cost,Quantity) VALUES('$saleItemName','$cost','1')";
+// Add sale item into current transaction
+if ($numRows == 0){
+    // Inserts a new row into the current transaction table if the sale item does not already exist in the
+    // current transaction
+    $query = "INSERT INTO "."$tableName"."(SaleItemName,Cost,Quantity) VALUES('$saleItemName','$cost','1')";
     mysqli_query($connection,$query);
 
 }
 else{
+    // If the sale item exists in the current transaction,
+    // update the quantity of that sale item in the transaction
     $row = mysqli_fetch_assoc($result);
     $quantity = $row['Quantity'];
 
