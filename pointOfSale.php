@@ -194,11 +194,13 @@
 
     <!-- Category Column -->
     <span class='rightGUI'>
-        Test
+
+        <!-- contents here -->
+
     </span>
 
     <?
-    /* Check for low stock, and trigger an alert if necissary */
+    /* Check for low stock, and trigger an alert if necessary */
     require_once("stockManagement.php");
     checkForLowStock($connection,$companyName);
     ?>
