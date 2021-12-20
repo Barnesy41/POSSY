@@ -22,24 +22,15 @@
         width: 20%;
         height: 655px;
         padding-top: 10px;
-        border: 1px solid blue;
-        background-color: yellow;
-    }
-
-    span.saleItem{
-        display: inline-grid;
-        width: 22%;
-        height: 15%;
-        border: 1px solid blue;
-        background-color: yellow;
-        margin: 10px;
+        border: 3px solid black;
+        background-color: #cbcbcb;
     }
 
     button.newSaleItem{
         display: inline-grid;
         width: 22%;
         height: 15%;
-        border: 1px solid blue;
+        border: 2px solid black;
         background-color: lime;
         margin: 10px;
     }
@@ -52,8 +43,9 @@
         padding-bottom: 5px;
         padding-top: 13px;
         padding-left 10px;
-        border: 1px solid blue;
-        background-color: yellow;
+        border-top: 3px solid black;
+        border-bottom: 3px solid black;
+        background-color: white;
         font-size: 18px; /* Change to zero, testing with above 0 */
     }
 
@@ -63,17 +55,28 @@
         height: 655px;
         padding-top: 10px;
         float:right;
-        border: 1px solid blue;
-        background-color: yellow;
+        border: 3px solid black;
+        background-color: #0404cb;
+        padding-left: 5px;
     }
 
     button.saleItem{
         display: inline-grid;
         width: 22%;
         height: 15%;
-        border: 1px solid blue;
-        background-color: yellow;
+        border: 2px solid black;
+        background-color: white;
         margin: 10px;
+    }
+
+    button.completeTransaction{
+        background-color: red;
+        border: none;
+        width: 300px;
+        height: 50px;
+        color: white;
+        font-size: larger;
+        font-weight: bold;
     }
 </style>
 
@@ -140,10 +143,10 @@
 
             /*Complete Transaction Button */
             $_SESSION['transactionID'] = $transactionID;
-            echo "<form action='process_completeTransaction.php'>
-                  <button type='submit'>Complete</button>
+            echo "<h3 align='center'><form action='process_completeTransaction.php'>
+                  <button class='completeTransaction' type='submit'>Close Transaction</button>
                   <input type='hidden' name='transactionID' value='$transactionID'>
-                  </form>";
+                  </form></h3>";
 
             ?>
     </span>
