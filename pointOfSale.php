@@ -78,6 +78,8 @@
 </style>
 
 <div>
+
+    <!-- Transaction Column -->
     <span class='leftGUI'>
         <?php
 
@@ -146,6 +148,7 @@
             ?>
     </span>
 
+    <!-- Sale Item Column -->
     <span class = 'midGUI' >
         <?php
         $menuName = $_SESSION['menuName'];
@@ -186,10 +189,16 @@
         ?>
     </span>
 
+    <!-- Category Column -->
     <span class='rightGUI'>
         Test
     </span>
 
+    <?
+    /* Check for low stock, and trigger an alert if necissary */
+    require_once("stockManagement.php");
+    checkForLowStock($connection,$companyName);
+    ?>
 </div>
 
 

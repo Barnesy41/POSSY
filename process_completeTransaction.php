@@ -11,7 +11,7 @@ $companyName = $_SESSION["companyName"];
 
 /*
  * This function returns false if an item is out of stock,
- * and true if a;; saleItems are in stock
+ * and true if all saleItems are in stock
  * $DBconnection stores the connection to the SQL database
  * $companyName is the name of the company of the current user
  * $decuctFromStock is a boolean value to show whether or not you want stock levels to be decreased, where:
@@ -75,15 +75,23 @@ function updateStockManagementSystem($DBconnection,$companyName)
             if (mysqli_num_rows($productQueryResult) == 1) {
 
                 // Checks if the stock management system has a great enough stock quantity of the product
-                if ($saleItemContentsRow['Quantity'] - $productRow['CurrentStockValue'] < 0) {
+                if ($productRow['CurrentStockValue'] - $saleItemContentsRow['Quantity'] < 0) {
 
                     $returnValue = false;
                 }
 
-                // Deducts from the stock management system
+                // Calculate new stock value of product
                 $productQuantity = $saleItemContentsRow['Quantity'];
+
+                $query = "SELECT CurrentStockValue FROM $stockManagementTableName WHERE ProductName = '$productName'";
+                $currentStockValueQueryResult = mysqli_query($connection,$query); // Run SQL query
+
+                $currentStockValueQueryRow = mysqli_fetch_assoc($currentStockValueQueryResult);
+                $newStockQuantity = $currentStockValueQueryRow['CurrentStockValue'] - $productQuantity;
+
+                // Deducts from the stock management system
                 $query = "UPDATE $stockManagementTableName 
-                          SET CurrentStockValue = 'CurrentStockValue - $productQuantity'
+                          SET CurrentStockValue = '$newStockQuantity'
                           WHERE ProductName = '$productName'";
                 mysqli_query($connection, $query);
 
@@ -105,20 +113,26 @@ function updateStockManagementSystem($DBconnection,$companyName)
      * in the previous section
      */
     if ($returnValue == false) {
+
+        // Select everything contained within the transaction table
+        $query = "SELECT * FROM $tableName";
+        $result = mysqli_query($connection, $query);
+
         // Loop through sale items
         for ($i = 0; $i < $numRows; $i++) {
+
             // fetch a new row from the SQL result
             $row = mysqli_fetch_assoc($result);
 
             // Store the table name for the contents of the current sale item
-            $saleItemContentsTableName = "SaleItem_Contents_" . $companyName . "_" . $row['ID'];
+            $saleItemContentsTableName = "SaleItem_Contents_" . $companyName . "_" . $row['SaleItemID'];
 
             // Select all rows for the contents of the current sale item
             $query = "SELECT * FROM $saleItemContentsTableName";
             $saleItemContentsResult = mysqli_query($connection, $query);
 
             // Loop through each product of a sale item
-            for ($k = 0; $k < mysqli_num_rows($saleItemContentsResult); $i++) {
+            for ($k = 0; $k < mysqli_num_rows($saleItemContentsResult); $k++) {
                 $saleItemContentsRow = mysqli_fetch_assoc($saleItemContentsResult);
 
                 // Select product name and current stock value from the stockmanagement table for the current product.
@@ -126,23 +140,34 @@ function updateStockManagementSystem($DBconnection,$companyName)
                 $stockManagementTableName = "stockmanagementtable_$companyName";
                 $productName = $saleItemContentsRow['Product'];
                 $query = "SELECT ProductName,CurrentStockValue FROM $stockManagementTableName
-                          WHERE ProductName == '$productName'";
+                          WHERE ProductName = '$productName'";
                 $productQueryResult = mysqli_query($connection, $query);
 
                 // Produce an error if more than one result is returned
                 // Produce an error if no results are returned
-                if (mysqli_num_rows($productQueryResult) == 1) {
+                if ($productQueryResult == false) {
+                    echo "ERROR! A product was missing from your stock management database";
+                    echo "this ran";
+                }
+                else if (mysqli_num_rows($productQueryResult) == 1) {
+
+                    // Calculate new stock value of product
+                    $productQuantity = $saleItemContentsRow['Quantity'];
+
+                    $query = "SELECT CurrentStockValue FROM $stockManagementTableName WHERE ProductName = '$productName'";
+                    $currentStockValueQueryResult = mysqli_query($connection,$query); // Run SQL query
+
+                    $currentStockValueQueryRow = mysqli_fetch_assoc($currentStockValueQueryResult);
+                    $newStockQuantity = $currentStockValueQueryRow['CurrentStockValue'] + $productQuantity;
 
                     // Increases quantities in the stock management system
-                    $productQuantity = $saleItemContentsRow['Quantity'];
                     $query = "UPDATE $stockManagementTableName 
-                              SET CurrentStockValue = 'CurrentStockValue + $productQuantity'
+                              SET CurrentStockValue = '$newStockQuantity'
                               WHERE ProductName = '$productName'";
                     mysqli_query($connection, $query);
 
-                } else if (mysqli_num_rows($productQueryResult) == 0) {
-                    echo "ERROR! A product was missing from your stock management database";
-                } else {
+                }
+                else {
                     echo "ERROR! Duplicated product names! Remove duplicates from your stock management database";
                 }
 
@@ -173,7 +198,6 @@ function updateStockManagementSystem($DBconnection,$companyName)
         mysqli_query($connection,$query);
     }
 
-    return $returnValue;
 }
 
 /*
@@ -181,5 +205,5 @@ function updateStockManagementSystem($DBconnection,$companyName)
 */
 updateStockManagementSystem($connection,$companyName);
 
-header('Location: pointOfSale.php');// redirect to home page
+header('Refresh: 2; URL=pointOfSale.php');// redirect user
 exit;
