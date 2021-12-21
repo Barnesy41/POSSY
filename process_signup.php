@@ -138,7 +138,7 @@ else{
     }
 }
 
-// header('Location: HomePage.php');// redirect to home page
-// exit;
+header('refresh: 2; URL = HomePage.php');// redirect to home page
+exit;
 ?>
 
