@@ -201,8 +201,24 @@
 
     <?
     /* Check for low stock, and trigger an alert if necessary */
-    require_once("stockManagement.php");
     checkForLowStock($connection,$companyName);
+
+    function checkForLowStock($connection,$companyName){
+        $tableName = "stockmanagementtable_".$companyName;
+        $query = "SELECT ProductID,ProductName,MinimumStockValue,CurrentStockValue,Ordered,SupplierName,Phone 
+              FROM $tableName WHERE CurrentStockValue < MinimumStockValue AND Ordered='off'";
+        $result = mysqli_query($connection, $query);
+
+        if(mysqli_num_rows($result) > 0) {
+            $_SESSION['returnedRows'] = mysqli_fetch_assoc($result);
+            $_SESSION['companyName'] = $companyName;
+            $_SESSION['tableName'] = $tableName;
+
+            header('Location: lowStock.php');// redirect user
+            exit;
+
+        }
+    }
     ?>
 </div>
 
