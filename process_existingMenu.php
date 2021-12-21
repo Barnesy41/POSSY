@@ -8,8 +8,11 @@ $companyName = $_SESSION['companyName'];
 
 $_SESSION['menuName'] = $menuName;
 
-$query = "SELECT MenuName FROM menus WHERE CompanyName = '$companyName' AND menuName = '$menuName'";
+$query = "SELECT MenuName,MenuID FROM menus WHERE CompanyName = '$companyName' AND menuName = '$menuName'";
 $result = mysqli_query($connect,$query);
+
+$row = mysqli_fetch_assoc($result);
+$_SESSION['menuID'] = $row['MenuID'];
 
 if (mysqli_num_rows($result) !=0){
 
@@ -21,4 +24,6 @@ else{
     //display an alert
     exit;
 }
+
+
 ?>

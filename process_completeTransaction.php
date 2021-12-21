@@ -42,8 +42,18 @@ function updateStockManagementSystem($DBconnection,$companyName)
         // fetch a new row from the SQL result
         $row = mysqli_fetch_assoc($result);
 
+        // Get the table name for the current menu
+        $menuID = $_SESSION['menuID'];
+        $name = "menu_".$companyName."_".$menuID;
+        $currentSaleItemName = $row['SaleItemName'];
+
+        // Get the sale item id of the current product from the current menu table
+        $query = "SELECT ID FROM $name WHERE saleItemName = '$currentSaleItemName'";
+        $queryResult = mysqli_query($connection,$query);
+        $rowID = mysqli_fetch_assoc($queryResult);
+
         // Store the table name for the contents of the current sale item
-        $saleItemContentsTableName = "SaleItem_Contents_".$companyName."_".$row['SaleItemID'];
+        $saleItemContentsTableName = "SaleItem_Contents_".$companyName."_".$rowID['ID'];
 
         // Select all rows for the contents of the current sale item
         $query = "SELECT * FROM $saleItemContentsTableName";
@@ -147,7 +157,6 @@ function updateStockManagementSystem($DBconnection,$companyName)
                 // Produce an error if no results are returned
                 if ($productQueryResult == false) {
                     echo "ERROR! A product was missing from your stock management database";
-                    echo "this ran";
                 }
                 else if (mysqli_num_rows($productQueryResult) == 1) {
 
@@ -205,5 +214,5 @@ function updateStockManagementSystem($DBconnection,$companyName)
 */
 updateStockManagementSystem($connection,$companyName);
 
-header('Refresh: 2; URL=pointOfSale.php');// redirect user
-exit;
+// header('Refresh: 2; URL=pointOfSale.php');// redirect user
+// exit;
