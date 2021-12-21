@@ -141,6 +141,7 @@
             }
             /* Output total cost of transaction */
             echo "<h3 align='center'>Total: $total</h3>";
+            $_SESSION['total'] = $total;
 
             /*Complete Transaction Button */
             $_SESSION['transactionID'] = $transactionID;
