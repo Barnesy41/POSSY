@@ -85,7 +85,7 @@ function updateStockManagementSystem($DBconnection,$companyName)
             if (mysqli_num_rows($productQueryResult) == 1) {
 
                 // Checks if the stock management system has a great enough stock quantity of the product
-                if ($productRow['CurrentStockValue'] - $saleItemContentsRow['Quantity'] < 0) {
+                if ($productRow['CurrentStockValue'] - ($saleItemContentsRow['Quantity'] * $row['Quantity']) < 0) {
 
                     $returnValue = false;
                 }
@@ -97,7 +97,7 @@ function updateStockManagementSystem($DBconnection,$companyName)
                 $currentStockValueQueryResult = mysqli_query($connection,$query); // Run SQL query
 
                 $currentStockValueQueryRow = mysqli_fetch_assoc($currentStockValueQueryResult);
-                $newStockQuantity = $currentStockValueQueryRow['CurrentStockValue'] - $productQuantity;
+                $newStockQuantity = $currentStockValueQueryRow['CurrentStockValue'] - ($productQuantity * $row['Quantity']);
 
                 // Deducts from the stock management system
                 $query = "UPDATE $stockManagementTableName 
@@ -167,7 +167,7 @@ function updateStockManagementSystem($DBconnection,$companyName)
                     $currentStockValueQueryResult = mysqli_query($connection,$query); // Run SQL query
 
                     $currentStockValueQueryRow = mysqli_fetch_assoc($currentStockValueQueryResult);
-                    $newStockQuantity = $currentStockValueQueryRow['CurrentStockValue'] + $productQuantity;
+                    $newStockQuantity = $currentStockValueQueryRow['CurrentStockValue'] + ($productQuantity * $row['Quantity']);
 
                     // Increases quantities in the stock management system
                     $query = "UPDATE $stockManagementTableName 
@@ -214,5 +214,5 @@ function updateStockManagementSystem($DBconnection,$companyName)
 */
 updateStockManagementSystem($connection,$companyName);
 
-// header('Refresh: 2; URL=pointOfSale.php');// redirect user
-// exit;
+header('Refresh: 2; URL=pointOfSale.php');// redirect user
+exit;
