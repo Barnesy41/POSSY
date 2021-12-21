@@ -212,7 +212,28 @@ function updateStockManagementSystem($DBconnection,$companyName)
 /*
  * MAIN
 */
-updateStockManagementSystem($connection,$companyName);
+
+/* Select everything from the current transaction table */
+$tableName = "transaction_" . $_GET["transactionID"] . "_" . $_SESSION['companyName'];
+$query = "SELECT * FROM $tableName";
+$result = mysqli_query($connection,$query);
+
+/*
+ *   Only attempt to update the stock management system
+ *   if are sale items contained within the current transaction
+*/
+if($result != false) {
+    if(mysqli_num_rows($result) != 0) {
+        updateStockManagementSystem($connection, $companyName);
+    }
+    else{
+        echo "Error! Transaction is empty";
+    }
+}
+else{
+    echo "Error! Transaction is empty";
+}
+
 
 header('Refresh: 2; URL=pointOfSale.php');// redirect user
 exit;
