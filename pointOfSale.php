@@ -11,6 +11,10 @@
     <a href="MyMenus.php">MyMenus</a>
     <a href="stockManagement.php">Stock Management</a>
     <a class="current" href="pointOfSale.php">POS</a>
+    <?php session_start();
+    $username = $_SESSION['username']; // get username from login process
+    ?>
+    <a style="float: right;" href="dropdown.php"> <?php echo $username; ?></php></a>
 </div>
 
 <style>
@@ -83,8 +87,6 @@
     <!-- Transaction Column -->
     <span class='leftGUI'>
         <?php
-
-            session_start();
             $companyName = $_SESSION['companyName'];
 
             /* Open Database Connection */
