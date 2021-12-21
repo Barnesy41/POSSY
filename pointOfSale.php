@@ -89,11 +89,12 @@
             session_start();
             $companyName = $_SESSION['companyName'];
 
-
-
             /* Open Database Connection */
             include "database_connect.php";
             $connection = openConnection();
+
+            /* Check for low stock, and trigger an alert if necessary */
+            checkForLowStock($connection,$companyName);
 
             //Open the current transaction
             //And display the transaction number
@@ -148,6 +149,23 @@
                   <input type='hidden' name='transactionID' value='$transactionID'>
                   </form></h3>";
 
+
+            function checkForLowStock($connection,$companyName){
+                $tableName = "stockmanagementtable_".$companyName;
+                $query = "SELECT ProductID,ProductName,MinimumStockValue,CurrentStockValue,Ordered,SupplierName,Phone 
+                      FROM $tableName WHERE CurrentStockValue < MinimumStockValue AND Ordered='off'";
+                $result = mysqli_query($connection, $query);
+
+                if(mysqli_num_rows($result) > 0) {
+                    $_SESSION['returnedRows'] = mysqli_fetch_assoc($result);
+                    $_SESSION['companyName'] = $companyName;
+                    $_SESSION['tableName'] = $tableName;
+
+                    header('Location: lowStock.php');// redirect user
+                    exit;
+
+                }
+            }
             ?>
     </span>
 
@@ -199,27 +217,6 @@
 
     </span>
 
-    <?
-    /* Check for low stock, and trigger an alert if necessary */
-    checkForLowStock($connection,$companyName);
-
-    function checkForLowStock($connection,$companyName){
-        $tableName = "stockmanagementtable_".$companyName;
-        $query = "SELECT ProductID,ProductName,MinimumStockValue,CurrentStockValue,Ordered,SupplierName,Phone 
-              FROM $tableName WHERE CurrentStockValue < MinimumStockValue AND Ordered='off'";
-        $result = mysqli_query($connection, $query);
-
-        if(mysqli_num_rows($result) > 0) {
-            $_SESSION['returnedRows'] = mysqli_fetch_assoc($result);
-            $_SESSION['companyName'] = $companyName;
-            $_SESSION['tableName'] = $tableName;
-
-            header('Location: lowStock.php');// redirect user
-            exit;
-
-        }
-    }
-    ?>
 </div>
 
 
