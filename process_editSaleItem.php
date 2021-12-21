@@ -122,7 +122,7 @@ if($saleItemToEdit == '+new' AND isTwoDecimalPlaces($itemPrice) == true){
         /* Otherwise, update the quantity of such item */
         else{
             $query = "UPDATE $tablename SET(Quantity = 'Quantity + 1') WHERE Product = $productArray[$i]";
-            mysqli_query($connection,$result);
+            mysqli_query($connection,$query);
 
         }
     }
