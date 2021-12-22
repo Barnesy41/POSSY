@@ -36,5 +36,28 @@ for ($i=0; $i<$numRows; $i++) {
 }
 
 
+/* Create a new transaction in the transaction history table,
+ * and create a new transaction table for the transaction.
+ */
+
+/* Insert new transaction table name into transaction history table */
+$tableName = "transactionhistory_".$companyName;
+$query = "INSERT INTO $tableName(Complete) VALUES('no')";
+mysqli_query($connection,$query);
+
+/* Retrieve transaction ID */
+$query = "SELECT TransactionID FROM $tableName WHERE Complete = 'no'";
+$queryResult = mysqli_query($connection,$query);
+$transactionHistoryRow = mysqli_fetch_assoc($queryResult);
+$transactionID = $transactionHistoryRow['TransactionID'];
+
+/* Create Initial Transaction Table */
+$tableName = "transaction_".$transactionID."_".$companyName;
+$query = "CREATE TABLE `users`.`$tableName` ( `SaleItemID` INT(9) NOT NULL AUTO_INCREMENT ,
+                `SaleItemName` TEXT NOT NULL , `Cost` DOUBLE NOT NULL , `Quantity` INT NOT NULL ,
+                 PRIMARY KEY (`SaleItemID`))";
+mysqli_query($connection,$query);
+
+
 
 ?>

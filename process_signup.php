@@ -120,6 +120,7 @@ if ($numResults == 0 && validateEmail($email) == true) {
                  PRIMARY KEY (`SaleItemID`))";
         mysqli_query($connection,$query);
 
+        /* Insert new transaction table name into transaction history table */
         $query = "INSERT INTO transactionhistory_$companyName(Complete)
                   VALUES('no')";
         mysqli_query($connection,$query);
