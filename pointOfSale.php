@@ -11,7 +11,65 @@
     <a href="MyMenus.php">MyMenus</a>
     <a href="stockManagement.php">Stock Management</a>
     <a class="current" href="pointOfSale.php">POS</a>
-    <?php session_start();
+    <!-- Search Bar -->
+    <?php
+    session_start();
+
+    /* Open Database Connection */
+    include "database_connect.php";
+    $connection = openConnection();
+
+    /* Search Bar*/
+    echo "
+    <style>
+    .searchBar{
+        width: 50%;
+        height:50px;
+        background-color: #3aff3a;
+        border: none;
+        outline: none;
+        resize: none;
+        color: white;
+        font-weight: bold;
+        font-size: 40px; 
+        margin: 0 auto;
+        float: left;
+        overflow: hidden;
+    }
+    
+    .searchBar:hover{
+    background-color: #00ba00;
+    }
+    
+    .searchSubmit{
+        width: 10%;
+        height: 55px;
+        background-color: #3aff3a;
+        border: none;
+        outline: none;
+        resize: none;
+        color: white;
+        font-weight: bold;
+        font-size: 20px;
+        text-align: center;
+        float: left;
+        overflow; hidden:
+        
+    }
+    
+    .searchSubmit:hover{
+        background-color: #00ba00;
+    }
+    
+    </style>
+    <form style='height: 0; width: 0; display: inline'  action='process_search.php'>
+    <textarea class='searchBar' name='searchBar' placeholder='Search:'></textarea>
+    <button class='searchSubmit' type='submit'>Submit</button>
+    </form>
+    ";
+    ?>
+
+    <?php
     $username = $_SESSION['username']; // get username from login process
     ?>
     <a style="float: right;" href="dropdown.php"> <?php echo $username; ?></php></a>
@@ -88,10 +146,6 @@
     <span class='leftGUI'>
         <?php
             $companyName = $_SESSION['companyName'];
-
-            /* Open Database Connection */
-            include "database_connect.php";
-            $connection = openConnection();
 
             /* Check for low stock, and trigger an alert if necessary */
             checkForLowStock($connection,$companyName);
