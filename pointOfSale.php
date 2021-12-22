@@ -184,7 +184,17 @@
         $tableName = "menu_".$companyName."_".$menuID;
         $_SESSION['companyMenuTableName'] = $tableName;
 
-        $query = "SELECT saleItemName,ID,price FROM $tableName";
+        /* Checks if a category has been selected that is not all */
+        if(!empty($_GET) && $_GET['category'] != "all"){
+            $category = $_GET['category'];
+            // Only show results for given category
+            $query = "SELECT saleItemName,ID,price FROM $tableName WHERE Category = '$category'";
+        }
+        else{
+            // show results for all categories
+            $query = "SELECT saleItemName,ID,price FROM $tableName";
+        }
+        /* Run query selecting which sale items to display */
         $result = mysqli_query($connection, $query);
         $numRows = mysqli_num_rows($result);
 
@@ -213,8 +223,67 @@
 
     <!-- Category Column -->
     <span class='rightGUI'>
+        <style>
+            .category{
+                background-color: #0404cb;
+                border: none;
+                width: 100%;
+                height: 8%;
+                color: white;
+                font-weight: bold;
+                font-size: 18px;
+            }
 
-        <!-- contents here -->
+            .category:hover button{
+                background-color: blue;
+                height: 50%;
+            }
+
+
+
+        </style>
+        <?php
+
+
+
+        /* Create 9 category buttons */
+
+        // Display default tab
+        echo "
+            <form class='category' action='pointOfSale.php'>
+            <input type='hidden' value='all' name='category'>
+            <button class='category' type='submit'>All</button>
+            </form>";
+
+
+        /* Search for all categories */
+        $tableName = "menu_".$companyName."_".$menuID;
+        $query = "SELECT DISTINCT Category FROM $tableName"; // Select only unique values
+        $categoryResult = mysqli_query($connection,$query);
+
+        /* Calculate number of rows returned by query */
+        $numRows = 0;
+        if($categoryResult == false){
+            $numRows = 0;
+        }
+        else{
+            $numRows = mysqli_num_rows($categoryResult);
+        }
+
+        /* Display category tabs */
+        for($i = 0; $i<$numRows; $i++) {
+
+            $categoryRow = mysqli_fetch_assoc($categoryResult); // fetch the next row from results
+
+            $tabName = $categoryRow['Category'];
+            echo "
+                <form class ='category' action='pointOfSale.php'>
+                <input type='hidden' value='$tabName' name='category'>
+                <button class='category' type='submit'>$tabName</button>
+                </form>
+            ";
+        }
+        ?>
 
     </span>
 
