@@ -111,7 +111,7 @@ if ($numResults == 0 && validateEmail($email) == true) {
         /* Create A Transaction History Table For This Company */
         $query = "CREATE TABLE `users`.`transactionhistory_$companyName` ( 
                   `TransactionID` INT(9) NOT NULL AUTO_INCREMENT , `Complete` TEXT NOT NULL DEFAULT 'no' , 
-                  PRIMARY KEY (`TransactionID`))";
+                  `Total` DECIMAL(10,2) NOT NULL, PRIMARY KEY (`TransactionID`))";
         mysqli_query($connection,$query);
 
         /* Create Initial Transaction Table */

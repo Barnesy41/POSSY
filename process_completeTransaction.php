@@ -190,8 +190,9 @@ function updateStockManagementSystem($DBconnection,$companyName)
      */
     if ($returnValue == true) {
         /* Set current transaction to complete */
+        $transactionTotal = $_SESSION['total'];
         $tableName = "transactionhistory_" . $companyName;
-        $query = "UPDATE $tableName SET Complete = 'yes' WHERE TransactionID = '$transactionID'";
+        $query = "UPDATE $tableName SET Complete = 'yes', Total = '$transactionTotal' WHERE TransactionID = '$transactionID'";
         mysqli_query($connection, $query);
 
         /* Open a new transaction */
