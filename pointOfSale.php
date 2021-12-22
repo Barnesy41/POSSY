@@ -146,10 +146,19 @@
                     
                     </style>
                     
-                    <form action='process_saleItem_increment'><button class='button' 
-                    style='transform: translate(-2200%, -265%); background-color: lime;' type='submit'>+</button></form>
-                    <form action='process_saleItem_decrement'><button class='button'
-                    style='transform: translate(-2200%, -165%); background-color: red' type='submit'>-</button></form>";
+                    <!-- Increment Button -->
+                    <form action='process_saleItem_increment.php'>
+                    <button class='button' style='transform: translate(-2200%, -265%);
+                    background-color: lime;' type='submit'>+</button>
+                    <input type='hidden' value='$saleItemName' name='saleItem'>
+                    </form>
+                    
+                    <!-- Decrement button -->
+                    <form action='process_saleItem_decrement.php'>
+                    <button class='button' style='transform: translate(-2200%, -165%);
+                    background-color: red' type='submit'>-</button>
+                    <input type='hidden' value='$saleItemName' name='saleItem'>
+                    </form>";
 
                 }
 
