@@ -126,7 +126,31 @@
                     $saleItemCost = "£" . $row['Cost'];
                     $quantity = $row['Quantity'];
 
-                    echo "<p align='center'>$saleItemName <br> Quantity: $quantity <br> $saleItemCost</p>";
+                    echo "
+                    <p align='center'>$saleItemName <br>
+                    Quantity: $quantity <br>
+                    $saleItemCost</p>
+                    
+                    <style>             
+                    .button{
+                    margin: 0px;
+                    left: 50%;
+                    position: absolute;
+                    border: none;
+                    font-weight: bold;
+                    color: white;
+                    width: 25px;
+                    height: 25px;
+                    font-size: 16px;
+                    }
+                    
+                    </style>
+                    
+                    <form action='process_saleItem_increment'><button class='button' 
+                    style='transform: translate(-2200%, -265%); background-color: lime;' type='submit'>+</button></form>
+                    <form action='process_saleItem_decrement'><button class='button'
+                    style='transform: translate(-2200%, -165%); background-color: red' type='submit'>-</button></form>";
+
                 }
 
                 /* Calculate total cost of transaction */
