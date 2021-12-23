@@ -101,7 +101,7 @@ if ($numResults == 0 && validateEmail($email) == true) {
             "CREATE TABLE `users`.`$tableName` ( `ProductID` INT NOT NULL AUTO_INCREMENT ,
                     `ProductName` TEXT NOT NULL , `MinimumStockValue` INT NOT NULL , `CurrentStockValue` INT NOT NULL, 
                     `Ordered` TEXT NOT NULL DEFAULT 'off' ,`SupplierName` TEXT NULL DEFAULT NULL , `Phone` INT(11) NULL,
-                     PRIMARY KEY (`ProductID`)); ");
+                    `ArrivalDate` DATETIME DEFAULT NULL, `ArrivalAmount` INT DEFAULT NULL, PRIMARY KEY (`ProductID`)); ");
 
         /* Insert the Table Name and Company Name into the Stock Management Hub table */
         $query = "INSERT INTO stockmanagementhub(TableName,CompanyName)
