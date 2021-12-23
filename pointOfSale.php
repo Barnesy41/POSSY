@@ -66,6 +66,7 @@
     <textarea class='searchBar' name='searchBar' placeholder='Search:'></textarea>
     <button class='searchSubmit' type='submit'>Submit</button>
     </form>
+    
     ";
     ?>
 
@@ -272,7 +273,14 @@
         $_SESSION['companyMenuTableName'] = $tableName;
 
         /* Checks if a category has been selected that is not all */
-        if(!empty($_GET) && $_GET['category'] != "all"){
+        if($_SESSION['shouldSearch'] == true){
+            // Retrieve query from process_search.php
+            // only shows research for entered search
+            $query = $_SESSION['menuQuery'];
+            $_SESSION ['shouldSearch'] = false; // set POS system not to search on next reload
+                                                // unless search is re-submitted
+        }
+        else if(!empty($_GET) && $_GET['category'] != "all"){
             $category = $_GET['category'];
             // Only show results for given category
             $query = "SELECT saleItemName,ID,price FROM $tableName WHERE Category = '$category'";

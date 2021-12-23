@@ -35,6 +35,7 @@ if($numResults != 0){
     $_SESSION['companyName'] = $companyName;
     $_SESSION['email'] = $email;
     $_SESSION['phoneNumber'] = $phoneNumber;
+    $_SESSION['shouldSearch'] = false; // set POS search bar as not actively searching
 
     echo "Account accessed";
 }
@@ -45,7 +46,6 @@ else{
 closeConnection($connection);
 
 header('Refresh: 3; URL=HomePage.php');
-
 exit;
 
 ?>
