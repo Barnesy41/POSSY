@@ -68,6 +68,52 @@
     </form>
     
     ";
+
+    /* Check for re-stock having arrived */
+    $tableName = "stockmanagementtable_".$_SESSION['companyName'];
+    $query = "SELECT * FROM $tableName";
+    $stockManagementTableResult = mysqli_query($connection,$query);
+
+    /* Calculate the number of rows returned by query */
+    $numRowsReturnedByQuery = 0;
+    if ($stockManagementTableResult == false){
+        $numRowsReturnedByQuery = 0;
+    }
+    else{
+        $numRowsReturnedByQuery = mysqli_num_rows($stockManagementTableResult);
+    }
+
+    /* Calculate current date & time */
+    date_default_timezone_set("GMT");
+    $currentDateLong = date("c");
+    $currentDateShort = substr($currentDateLong, 0, 16);
+
+    for($i=0; $i<$numRowsReturnedByQuery; $i++) {
+        /* Fetch new row of the query result */
+        $row = mysqli_fetch_assoc($stockManagementTableResult);
+
+        /* Fetch arrival date and time from the current row */
+        $arrivalDate = $row['ArrivalDate'];
+
+        /* if date&time is not null, check whether the date and time of stock due to arrive is less than the
+           current date and time */
+        if (($arrivalDate < $currentDateShort and $arrivalDate != null)) {
+
+            /* Fetch ArrivalQuantity & ProductID */
+            $arrivalQuantity = $row['ArrivalAmount'];
+            $productID = $row['ProductID'];
+
+            /* Calculate redirect URL */
+            $redirectURL = "hasStockArrived.php?productID=".$productID."&arrivalDate=".$arrivalDate.
+                           "arrivalQuantity=".$arrivalQuantity;
+
+            /* Redirect the user */
+            header('refresh: 0; URL = '.$redirectURL);// redirect to home page
+            exit;
+        }
+    }
+
+
     ?>
 
     <?php
