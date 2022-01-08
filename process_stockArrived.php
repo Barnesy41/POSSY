@@ -11,7 +11,9 @@ $arrivalStockValue = $_GET['arrivalQuantity'];
 $newStockValue = $priorStockValue + $arrivalStockValue;
 
 /* Update the values of the product in the company's stock management database */
+$productID = $_GET['productID'];
 $tableName = "stockmanagementtable_".$_SESSION['companyName'];
-$query = "UPDATE $tableName SET CurrentStockValue = '$newStockValue', Ordered = 'off', ArrivalDate= NULL, ArrivalAmount = NULL";
+$query = "UPDATE $tableName SET CurrentStockValue = '$newStockValue', Ordered = 'off', ArrivalDate= NULL, 
+          ArrivalAmount = NULL WHERE ProductID = '$productID'";
 mysqli_query($connection,$query);
 
