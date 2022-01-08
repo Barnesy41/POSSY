@@ -99,13 +99,14 @@
            current date and time */
         if (($arrivalDate < $currentDateShort and $arrivalDate != null)) {
 
-            /* Fetch ArrivalQuantity & ProductID */
+            /* Fetch ArrivalQuantity & ProductID & ProductName */
             $arrivalQuantity = $row['ArrivalAmount'];
             $productID = $row['ProductID'];
+            $productName = $row['ProductName'];
 
             /* Calculate redirect URL */
-            $redirectURL = "hasStockArrived.php?productID=".$productID."&arrivalDate=".$arrivalDate.
-                           "arrivalQuantity=".$arrivalQuantity;
+            $redirectURL = "hasStockArrived.php?productID=".$productID."&productName=".$productName.
+                           "&arrivalDate=".$arrivalDate."arrivalQuantity=".$arrivalQuantity;
 
             /* Redirect the user */
             header('refresh: 0; URL = '.$redirectURL);// redirect to home page
