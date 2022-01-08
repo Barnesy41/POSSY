@@ -106,7 +106,7 @@
 
             /* Calculate redirect URL */
             $redirectURL = "hasStockArrived.php?productID=".$productID."&productName=".$productName.
-                           "&arrivalDate=".$arrivalDate."arrivalQuantity=".$arrivalQuantity;
+                           "&arrivalDate=".$arrivalDate."&arrivalQuantity=".$arrivalQuantity;
 
             /* Redirect the user */
             header('refresh: 0; URL = '.$redirectURL);// redirect to home page
