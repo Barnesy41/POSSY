@@ -36,7 +36,7 @@ echo "
     <br>
 
     <!-- Display minimum stock value input field -->
-    <label for='MinimumStockValue'>Product Name:</label>
+    <label for='MinimumStockValue'>Minimum Stock:</label>
     <input type='text' name='MinimumStockValue' value='$_GET[MinimumStockValue]' required>
     
     <br>
