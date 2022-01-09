@@ -1,3 +1,7 @@
+<?php
+session_start(); // start the current session
+?>
+
 Has the re-stock of product:
 <?php echo "<br>".$_GET['productName']."<br>"; ?>
 Arrived? <br>

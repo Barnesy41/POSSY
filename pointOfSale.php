@@ -87,6 +87,9 @@
     date_default_timezone_set("GMT");
     $currentDateLong = date("c");
     $currentDateShort = substr($currentDateLong, 0, 16);
+    $currentDateShort = str_replace("T"," ","$currentDateShort"); /* remove the letter T from the
+                                                                                         string and replace with a space
+                                                                                         character */
 
     for($i=0; $i<$numRowsReturnedByQuery; $i++) {
         /* Fetch new row of the query result */
@@ -94,17 +97,18 @@
 
         /* Fetch arrival date and time from the current row */
         $arrivalDate = $row['ArrivalDate'];
+        $arrivalDate = substr($arrivalDate, 0, 16); // shorten arrival date to remove seconds
 
         /* if date&time is not null, check whether the date and time of stock due to arrive is less than the
            current date and time */
-        if (($arrivalDate < $currentDateShort and $arrivalDate != null)) {
+        if (($arrivalDate <= $currentDateShort and $arrivalDate != null)) {
 
             /* Fetch data from each column of the result into variables */
             $arrivalQuantity = $row['ArrivalAmount'];
             $productID = $row['ProductID'];
             $productName = $row['ProductName'];
             $currentStock = $row['CurrentStockValue'];
-            $minimumStock = $row['minimummStockValue'];
+            $minimumStock = $row['MinimumStockValue'];
             $ordered = $row['Ordered'];
             $supplierName = $row['SupplierName'];
             $phoneNumber = $row['Phone'];
