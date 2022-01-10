@@ -29,7 +29,6 @@ else{
     echo "error! Invalid input"; // Output error
 }
 
-echo $currentDateShort;
-echo "<br>".$dateTime;
-
+header('refresh: 0; URL = pointOfSale.php');// redirect to POS page
+exit;
 ?>
