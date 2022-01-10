@@ -44,7 +44,7 @@ echo "
     <!-- Display checkbox input field for whether or not a product has been ordered -->
     <label for='Ordered'>On order:</label>
     <input type='hidden' value='off' name='Ordered'> <!-- to solve not being posted if off -->
-    <input type='checkbox' name='Ordered' value='$_GET[Ordered]'>
+    <input type='checkbox' name='Ordered'>
     
     <br>
 
