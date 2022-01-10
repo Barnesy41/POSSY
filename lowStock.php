@@ -25,9 +25,3 @@ echo "
     <button type='submit'>Ordered</button> <!-- Output submit button -->
     </form>
     ";
-
-/* Output ignore submit button */
-echo "<form style='display: inline'  class='lowStock' action='pointOfSale.php'>
-      <button type='submit' >Ignore</button>
-      </form>";
-?>
