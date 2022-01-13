@@ -246,7 +246,7 @@
                     
                     <style>             
                     .button{
-                    margin: 0px;
+                    margin: 0;
                     left: 50%;
                     position: absolute;
                     border: none;
