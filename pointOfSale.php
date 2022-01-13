@@ -286,17 +286,20 @@
                 }
             }
             /* Output total cost of transaction */
-            echo "<h3 align='center'>Total: $total</h3>";
+            ?>
+            <h3 align='center'>Total: <?php echo $total; ?></h3>
+            <?php
             $_SESSION['total'] = $total;
 
             /*Complete Transaction Button */
             $_SESSION['transactionID'] = $transactionID;
-            echo "<h3 align='center'><form action='process_completeTransaction.php'>
+            ?>
+            <h3 align='center'><form action='process_completeTransaction.php'>
                   <button class='completeTransaction' type='submit'>Close Transaction</button>
-                  <input type='hidden' name='transactionID' value='$transactionID'>
-                  </form></h3>";
+                  <input type='hidden' name='transactionID' value='<?php echo $transactionID; ?>'>
+                  </form></h3>
 
-
+            <?php
             function checkForLowStock($connection,$companyName){
                 $tableName = "stockmanagementtable_".$companyName;
                 $query = "SELECT ProductID,ProductName,MinimumStockValue,CurrentStockValue,Ordered,SupplierName,Phone 
