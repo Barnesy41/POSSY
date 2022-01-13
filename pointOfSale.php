@@ -217,9 +217,9 @@
             $row = mysqli_fetch_assoc($result);
 
             $transactionID = $row['TransactionID'];
-
-            echo "<h2 align='center'> Transaction ID: ".$transactionID."</h2>";
-
+?>
+            <h2 align='center'> Transaction ID: <?php echo"$transactionID"; ?></h2>
+<?php
 
 
             //Display the current items on the transaction
@@ -239,10 +239,10 @@
                     $saleItemCost = "£" . $row['Cost'];
                     $quantity = $row['Quantity'];
 
-                    echo "
-                    <p align='center'>$saleItemName <br>
-                    Quantity: $quantity <br>
-                    $saleItemCost</p>
+                    ?>
+                    <p align='center'><?php echo $saleItemName; ?><br>
+                    Quantity: <?php echo $quantity; ?> <br>
+                    <?php echo $saleItemCost; ?> </p>
                     
                     <style>             
                     .button{
@@ -258,21 +258,21 @@
                     }
                     
                     </style>
-                    
+
                     <!-- Increment Button -->
                     <form action='process_saleItem_increment.php'>
                     <button class='button' style='transform: translate(-2200%, -265%);
                     background-color: lime;' type='submit'>+</button>
-                    <input type='hidden' value='$saleItemName' name='saleItem'>
+                    <input type='hidden' value='<?php echo $saleItemName; ?>' name='saleItem'>
                     </form>
                     
                     <!-- Decrement button -->
                     <form action='process_saleItem_decrement.php'>
                     <button class='button' style='transform: translate(-2200%, -165%);
                     background-color: red' type='submit'>-</button>
-                    <input type='hidden' value='$saleItemName' name='saleItem'>
-                    </form>";
-
+                    <input type='hidden' value='<?php echo $saleItemName; ?>' name='saleItem'>
+                    </form>
+                    <?php
                 }
 
                 /* Calculate total cost of transaction */
