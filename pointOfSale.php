@@ -248,6 +248,25 @@
             // Set the transactionID to the required transactionID */
             $transactionID = $_SESSION['transactionID'];
 
+            /* search for a transaction with the current transactionID */
+            $transactionHistoryTable = "transactionhistory_".$companyName;
+            $query = "SELECT TransactionID FROM $transactionHistoryTable WHERE TransactionID = '$transactionID'";
+
+            /* If no transaction ID is returned, create a new transaction with the given transactionID */
+            if (mysqli_query($connection,$query) == false){
+                /* Open a new transaction with the provided transactionID */
+                $query = "INSERT INTO transactionhistory_$companyName(TransactionID,Complete) VALUES('$transactionID','no')";
+                mysqli_query($connection, $query);
+
+                // Create a new transaction table
+                $newTransactionID = $transactionID;
+                $newTableName = "transaction_".$newTransactionID."_".$companyName;
+                $query = "CREATE TABLE `users`.`$newTableName` ( `SaleItemID` INT(9) NOT NULL AUTO_INCREMENT ,
+                `SaleItemName` TEXT NOT NULL , `Cost` DOUBLE NOT NULL , `Quantity` INT NOT NULL ,
+                 PRIMARY KEY (`SaleItemID`))";
+                mysqli_query($connection,$query);
+            }
+
             ?>
 
             <!-- Outpupt the transaction ID -->
