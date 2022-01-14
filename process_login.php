@@ -36,6 +36,7 @@ if($numResults != 0){
     $_SESSION['email'] = $email;
     $_SESSION['phoneNumber'] = $phoneNumber;
     $_SESSION['shouldSearch'] = false; // set POS search bar as not actively searching
+    $_SESSION['transactionID'] = "";
 
     echo "Account accessed";
 }
