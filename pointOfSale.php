@@ -91,6 +91,9 @@
                                                                                          string and replace with a space
                                                                                          character */
 
+    /* Search through all rows returned by the query, with each result checking whether stock has been ordered
+       and if it has been ordered, whether the arrival date of new stock is less than or equal to the current
+       date and time */
     for($i=0; $i<$numRowsReturnedByQuery; $i++) {
         /* Fetch new row of the query result */
         $row = mysqli_fetch_assoc($stockManagementTableResult);
@@ -209,16 +212,51 @@
             /* Check for low stock, and trigger an alert if necessary */
             checkForLowStock($connection,$companyName);
 
-            //Open the current transaction
-            //And display the transaction number
-            $query = "SELECT TransactionID FROM transactionhistory_$companyName WHERE Complete = 'no'";
+            //Set the transactionID to the default transaction if there is not an already existing transactionID
+            if($_SESSION['transactionID'] == "") {
+                $query = "SELECT TransactionID FROM transactionhistory_$companyName WHERE Complete = 'no'";
 
-            $result = mysqli_query($connection,$query);
-            $row = mysqli_fetch_assoc($result);
+                $result = mysqli_query($connection, $query);
+                $row = mysqli_fetch_assoc($result);
 
-            $transactionID = $row['TransactionID'];
+                $transactionID = $row['TransactionID'];
+            }
 ?>
-            <h2 align='center'> Transaction ID: <?php echo"$transactionID"; ?></h2>
+
+            <style>
+                .displayInline{
+                    display: inline-block;
+                }
+
+                .displayInlineH2{
+                    padding-left: 10%;
+                    display: inline-block;
+                }
+            </style>
+
+            <?php
+            /* Check if any transactionID values have been posted */
+            if(!empty($_POST)){
+                /* Update the transactionID session variable with the posted transactionID */
+                $_SESSION['transactionID'] = $_POST['transactionID'];
+
+                /* If there is not a transaction with the chosen ID, open a new transaction with that ID */
+
+                /* Otherwise, if there is an existing transaction but it was closed, output that the chosen
+                   transaction number is invalid */
+            }
+            // Set the transactionID to the required transactionID */
+            $transactionID = $_SESSION['transactionID'];
+
+            ?>
+
+            <!-- Outpupt the transaction ID -->
+            <h2 class="displayInlineH2" > Transaction ID: </h2>
+            <form class="displayInline" method="post">
+                <input class="displayInline" type='number' value='<?php echo $transactionID; ?>' step='1' size='3' name="transactionID">
+                <button class="displayInline" type='submit'>✓</button>
+            </form>
+
 <?php
 
 
