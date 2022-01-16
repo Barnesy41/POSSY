@@ -251,9 +251,19 @@
             /* search for a transaction with the current transactionID */
             $transactionHistoryTable = "transactionhistory_".$companyName;
             $query = "SELECT TransactionID FROM $transactionHistoryTable WHERE TransactionID = '$transactionID'";
+            $result = mysqli_query($connection,$query);
+
+            /* Calculate the umber of rows returned by the query */
+            $numRows = 0;
+            if($result == false){
+                $numRows = 0;
+            }
+            else{
+                $numRows = mysqli_num_rows($result);
+            }
 
             /* If no transaction ID is returned, create a new transaction with the given transactionID */
-            if (mysqli_query($connection,$query) == false){
+            if ($numRows == 0){
                 /* Open a new transaction with the provided transactionID */
                 $query = "INSERT INTO transactionhistory_$companyName(TransactionID,Complete) VALUES('$transactionID','no')";
                 mysqli_query($connection, $query);
@@ -363,7 +373,16 @@
                       FROM $tableName WHERE CurrentStockValue < MinimumStockValue AND Ordered='off'";
                 $result = mysqli_query($connection, $query);
 
-                if(mysqli_num_rows($result) > 0) {
+                /* Calculate the umber of rows returned by the query */
+                $numRows = 0;
+                if($result == false){
+                    $numRows = 0;
+                }
+                else{
+                    $numRows = mysqli_num_rows($result);
+                }
+
+                if($numRows > 0) {
                     $_SESSION['returnedRows'] = mysqli_fetch_assoc($result);
                     $_SESSION['companyName'] = $companyName;
                     $_SESSION['tableName'] = $tableName;

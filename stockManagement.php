@@ -82,7 +82,16 @@ function checkForLowStock($connection,$companyName){
               FROM $tableName WHERE CurrentStockValue < MinimumStockValue AND Ordered='off'";
     $result = mysqli_query($connection, $query);
 
-    if(mysqli_num_rows($result) > 0) {
+    /* Calculate the number of rows returned by the query */
+    $numRows = 0;
+    if($result == false){
+        $numRows = 0;
+    }
+    else{
+        $numRows = mysqli_num_rows($result);
+    }
+
+    if($numRows > 0) {
         $_SESSION['returnedRows'] = mysqli_fetch_assoc($result);
         $_SESSION['companyName'] = $companyName;
         $_SESSION['tableName'] = $tableName;
