@@ -242,7 +242,7 @@
                     $tableName = "transactionhistory_".$companyName; //calculate the name of the table to insert into the SQL query
                     $requestedTransactionID = $_POST['transactionID'];
                     $query = "SELECT * FROM $tableName WHERE 
-                              TransactionID = '$requestedTransactionID' AND Complete = 'no'";
+                              TransactionID = '$requestedTransactionID' AND Complete = 'yes'";
                     $result = mysqli_query($connection,$query);
 
                     /* Calculate the number of rows returned by the query */
@@ -255,7 +255,7 @@
                     }
 
                     /* If there were results found, update the current transactionID */
-                    if($numberOfRows >0) {
+                    if($numberOfRows == 0) {
                         /* Update the transactionID session variable with the posted transactionID */
                         $_SESSION['transactionID'] = $_POST['transactionID'];
                     }
