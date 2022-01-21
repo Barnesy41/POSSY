@@ -207,7 +207,7 @@
     <!-- Transaction Column -->
     <span class='leftGUI'>
         <?php
-            $companyName = $_SESSION['companyName'];
+            $companyName = $_SESSION['companyName']; // initiate $companyName
 
             /* Check for low stock, and trigger an alert if necessary */
             checkForLowStock($connection,$companyName);
@@ -215,11 +215,11 @@
             //Set the transactionID to the default transaction if there is not an already existing transactionID
             if($_SESSION['transactionID'] == "") {
                 $query = "SELECT TransactionID FROM transactionhistory_$companyName WHERE Complete = 'no'";
-
                 $result = mysqli_query($connection, $query);
+
                 $row = mysqli_fetch_assoc($result);
 
-                $transactionID = $row['TransactionID'];
+                $_SESSION['transactionID'] = $row['TransactionID'];
             }
 ?>
 
@@ -237,15 +237,30 @@
             <?php
             /* Check if any transactionID values have been posted */
             if(!empty($_POST)){
-                /* Update the transactionID session variable with the posted transactionID */
-                $_SESSION['transactionID'] = $_POST['transactionID'];
+                if($_POST['transactionID'] != "") {
+                    /* Search in the transaction history table for a transaction with the requested transactionID that is open */
+                    $tableName = "transactionhistory_".$companyName; //calculate the name of the table to insert into the SQL query
+                    $requestedTransactionID = $_POST['transactionID'];
+                    $query = "SELECT * FROM $tableName WHERE 
+                              TransactionID = '$requestedTransactionID' AND Complete = 'no'";
+                    $result = mysqli_query($connection,$query);
 
-                /* If there is not a transaction with the chosen ID, open a new transaction with that ID */
+                    /* Calculate the number of rows returned by the query */
+                    $numberOfRows = 0;
+                    if($result == false){
+                        $numberOfRows = 0;
+                    }
+                    else{
+                        $numberOfRows = mysqli_num_rows($result);
+                    }
 
-                /* Otherwise, if there is an existing transaction but it was closed, output that the chosen
-                   transaction number is invalid */
+                    /* If there were results found, update the current transactionID */
+                    if($numberOfRows >0) {
+                        /* Update the transactionID session variable with the posted transactionID */
+                        $_SESSION['transactionID'] = $_POST['transactionID'];
+                    }
+                }
             }
-            // Set the transactionID to the required transactionID */
             $transactionID = $_SESSION['transactionID'];
 
             /* search for a transaction with the current transactionID */
