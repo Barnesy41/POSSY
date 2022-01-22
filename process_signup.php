@@ -75,23 +75,24 @@ if ($numResults == 0 && validateEmail($email) == true) {
     echo "Username is valid\n";// temp
 
     if ($phoneNumber == null and $email != null) {
-        mysqli_query($connection, "INSERT INTO Credentials (Username, Password, Company, Email) 
-            VALUES ('$username', '$password', '$companyName', '$email')");
+        mysqli_query($connection, "INSERT INTO Credentials (Username, Password, Company, Email, accountType) 
+            VALUES ('$username', '$password', '$companyName', '$email','unknown')");
     } else if ($phoneNumber != null and $email == null) {
-        mysqli_query($connection, "INSERT INTO Credentials (Username, Password, Company, Phone) 
-            VALUES ('$username', '$password', '$companyName', '$phoneNumber')");
+        mysqli_query($connection, "INSERT INTO Credentials (Username, Password, Company, Phone, accountType) 
+            VALUES ('$username', '$password', '$companyName', '$phoneNumber','unknown')");
     } else if ($phoneNumber == null and $email == null) {
-        mysqli_query($connection, "INSERT INTO Credentials (Username, Password, Company) 
-            VALUES ('$username', '$password', '$companyName')");
+        mysqli_query($connection, "INSERT INTO Credentials (Username, Password, Company, accountType) 
+            VALUES ('$username', '$password', '$companyName','unknown')");
     } else {
-        mysqli_query($connection, "INSERT INTO Credentials (Username, Password, Company, Email, Phone) 
-            VALUES ('$username', '$password', '$companyName', '$email', '$phoneNumber')");
+        mysqli_query($connection, "INSERT INTO Credentials (Username, Password, Company, Email, Phone, accountType) 
+            VALUES ('$username', '$password', '$companyName', '$email', '$phoneNumber','unknown')");
     }
 
     /* Check if stock management table already exists for that company, if not create one. */
     $result = mysqli_query($connection, "SELECT Company FROM Credentials WHERE Company = '$companyName'");
     $numResults = mysqli_num_rows($result);
 
+    /* This is the first time the company has been registered to the system */
     if($numResults == 1){
         /* Calculate Table Name For This Company */
         $tableName = "stockmanagementTable_".$companyName;
@@ -123,6 +124,11 @@ if ($numResults == 0 && validateEmail($email) == true) {
         /* Insert new transaction table name into transaction history table */
         $query = "INSERT INTO transactionhistory_$companyName(Complete)
                   VALUES('no')";
+        mysqli_query($connection,$query);
+
+        /* Update the account type of the current user to owner, as they are the user who registered their company to
+           the program */
+        $query = "UPDATE Credentials SET accountType = 'owner'";
         mysqli_query($connection,$query);
 
     }
