@@ -22,19 +22,27 @@ if($numResults != 0){
     $row = $result->fetch_row();
     $companyName = $row[0] ?? false;
 
+    /* Store the current user's email in a session variable */
     $query = "SELECT Email FROM Credentials WHERE Username = '$username'";
     $result = mysqli_query($connection,$query);
     $email = $result->fetch_row()[0] ?? false;
+    $_SESSION['email'] = $email;
 
+    /* Store the current user's phone number in a session variable */
     $query = "SELECT Phone FROM Credentials WHERE Username = '$username'";
     $result = mysqli_query($connection,$query);
     $phoneNumber = $result->fetch_row()[0] ?? false;
+    $_SESSION['phoneNumber'] = $phoneNumber;
 
+    /* Store the current user's account type in a session variable */
+    $query = "SELECT accountType FROM Credentials WHERE Username = '$username'";
+    $result = mysqli_query($connection,$query);
+    $_SESSION['accountType'] = $result->fetch_row()[0];
+
+    /* Set session variables */
     $_SESSION['username'] = $username;
     $_SESSION['password'] = $password;
     $_SESSION['companyName'] = $companyName;
-    $_SESSION['email'] = $email;
-    $_SESSION['phoneNumber'] = $phoneNumber;
     $_SESSION['shouldSearch'] = false; // set POS search bar as not actively searching
     $_SESSION['transactionID'] = "";
 
