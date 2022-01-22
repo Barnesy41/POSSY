@@ -24,6 +24,7 @@
 <form action="process_dayEnd.php">
     <button type="submit" name="endOfDay">End Of Day</button>
 </form>
+
 <?php
 /* Open DB connection */
 include "database_connect.php";
@@ -57,3 +58,8 @@ for ($i=0; $i<$numRows; $i++){
 }
 
 echo "Daily Total: ".$total; // Ouput the daily total
+
+require_once('functions.php');
+isUserAllowedAccessToThisPage($_SESSION['accountType'],"dropdown.php");
+
+?>

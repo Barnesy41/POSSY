@@ -101,4 +101,7 @@ function checkForLowStock($connection,$companyName){
 
     }
 }
+
+require_once('functions.php');
+isUserAllowedAccessToThisPage($_SESSION['accountType'],"stockManagement.php");
 ?>

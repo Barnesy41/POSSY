@@ -40,3 +40,10 @@
 
 </body>
 </html>
+
+<?php
+session_start();
+
+require_once('functions.php');
+isUserAllowedAccessToThisPage($_SESSION['accountType'],"MyMenus.php");
+?>

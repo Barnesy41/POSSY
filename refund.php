@@ -22,3 +22,7 @@
     <button type="submit" name="submit">Submit</button>
 </form>
 
+<?php
+require_once('functions.php');
+isUserAllowedAccessToThisPage($_SESSION['accountType'],"refund.php");
+?>

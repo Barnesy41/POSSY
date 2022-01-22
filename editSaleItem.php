@@ -27,4 +27,6 @@ echo "<input type='text' name='saleItemCategory' placeholder='Food'>";
 echo "<textarea name='products' placeholder='bread,bread,cheese'></textarea>";
 echo "<button type='submit'>Confirm</button>";
 
+require_once('functions.php');
+isUserAllowedAccessToThisPage($_SESSION['accountType'],"editSaleItem.php");
 ?>

@@ -74,4 +74,7 @@ echo "
     <button type='submit'>Done</button>
 </form>";
 
+require_once('functions.php');
+isUserAllowedAccessToThisPage($_SESSION['accountType'],"EditProduct.php");
+
 ?>
