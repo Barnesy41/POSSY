@@ -58,5 +58,3 @@ header('Refresh: 3; URL=HomePage.php');
 exit;
 
 ?>
-
-

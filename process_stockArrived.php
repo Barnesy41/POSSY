@@ -20,4 +20,3 @@ mysqli_query($connection,$query);
 /* Redirect the user */
 header('refresh: 0; URL = pointOfSale.php');// redirect to home page
 exit;
-

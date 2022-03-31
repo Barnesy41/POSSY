@@ -58,6 +58,4 @@ $query = "CREATE TABLE `users`.`$tableName` ( `SaleItemID` INT(9) NOT NULL AUTO_
                  PRIMARY KEY (`SaleItemID`))";
 mysqli_query($connection,$query);
 
-
-
 ?>

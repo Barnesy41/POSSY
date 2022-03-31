@@ -142,8 +142,4 @@ else{
     mysqli_query($connection,$query);
 }
 
-
 ?>
-
-
-

@@ -49,8 +49,5 @@ function isUserAllowedAccessToThisPage($accountType,$fileName){
         header('Refresh: 0; URL=HomePage.php'); //Redirects the user away from the page
         exit;
     }
-
-
-
 }
 ?>
